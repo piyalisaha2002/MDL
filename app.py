@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import os 
 
-file_path = os.path.join(os.path.dirname(__file__), "CI-Extraction.xlsx")
+# file_path = os.path.join(os.path.dirname(__file__), "CI-Extraction.xlsx")
+file_path = os.path.join(os.getcwd(), "CI-Extraction.xlsx")
 
 # Load Excel file
 # file_path = 'CI-Extraction.xlsx'
@@ -142,6 +143,7 @@ if st.button("Enter"):
     else:
         st.warning("Please select a function name and at least one stage name.")
         
+
 
 
 
