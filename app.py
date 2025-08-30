@@ -10,9 +10,14 @@ file_path = os.path.join(os.getcwd(), "CI-Extraction.xlsx")
 df = None
 excel_error = None
 try:
-    df = pd.read_excel(file_path, header=None)
+    df = pd.read_excel(file_path, header=None, sheet_name="Sheet1")
+    # df = pd.read_excel(file_path, header=None)
 except Exception as e:
     excel_error = str(e)
+
+st.write("df shape:", None if df is None else df.shape)
+if df is not None:
+    st.write("Sample rows:", df.head(8))
 
 # Constant marker values
 marker_values_input = ["DR", "D", "U", "X,D"]
@@ -45,6 +50,10 @@ def get_matching_documents(function_name, selected_stages):
             end_idx += 1
         
         function_filtered_df = df.iloc[start_idx + 1:end_idx]
+        # def nonempty_two_cols(s):
+        #     return all(pd.notna(s.get(col)) and str(s.get(col)).strip() != "" for col in [0, 1])
+
+        # document_level_df = function_filtered_df[function_filtered_df[[0, 1]].apply(nonempty_two_cols, axis=1)]
         document_level_df = function_filtered_df[
             function_filtered_df[[0, 1]].apply(lambda row: all(pd.notna(row[i]) and str(row[i]).strip() != '' for i in range(2)), axis=1)
         ]
@@ -143,6 +152,7 @@ if st.button("Enter"):
     else:
         st.warning("Please select a function name and at least one stage name.")
         
+
 
 
 
